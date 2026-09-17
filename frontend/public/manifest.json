@@ -1,0 +1,17 @@
+{
+  "short_name": "SAMANVAY AI",
+  "name": "SAMANVAY AI - Disaster Response & Coordination System",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0F172A",
+  "theme_color": "#DC2626",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "description": "AI-powered rapid emergency response, resource allocation, and field coordination system."
+}
