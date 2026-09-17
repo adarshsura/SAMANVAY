@@ -106,6 +106,17 @@ Access the application in your browser at:
 
 ---
 
+## 🌐 Deploy to Vercel
+
+SAMANVAY AI is pre-configured for 1-click fullstack deployment on Vercel using `vercel.json` (Vercel Services architecture):
+
+1. Go to your [Vercel Dashboard](https://vercel.com/new) and click **"Import Project"**.
+2. Select the repository: **`adarshsura/SAMANVAY`**.
+3. Keep the **Root Directory** as `./` (default).
+4. Click **Deploy**. Vercel will build the Vite frontend, mount the FastAPI backend service via `main:app`, and map `/api/*` routes automatically.
+
+---
+
 ## 🧪 Automated Testing Suite
 
 SAMANVAY AI includes comprehensive automated pytest tests covering all mathematical and operational rules:
