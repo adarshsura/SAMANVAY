@@ -21,16 +21,26 @@ from app.api.websocket import router as ws_router
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("SAMANVAY-AI")
 
+_db_initialized = False
+
+def init_db():
+    global _db_initialized
+    if not _db_initialized:
+        logger.info("Initializing database schema...")
+        Base.metadata.create_all(bind=engine)
+        db = SessionLocal()
+        try:
+            seed_all_data(db)
+            _db_initialized = True
+        except Exception as e:
+            logger.error(f"Error during database initialization: {e}")
+        finally:
+            db.close()
+        logger.info("SAMANVAY AI Engine Ready.")
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Initializing database schema...")
-    Base.metadata.create_all(bind=engine)
-    db = SessionLocal()
-    try:
-        seed_all_data(db)
-    finally:
-        db.close()
-    logger.info("SAMANVAY AI Engine Ready.")
+    init_db()
     yield
 
 app = FastAPI(
@@ -39,6 +49,12 @@ app = FastAPI(
     description="AI-Powered Disaster Resource Allocation & Coordination Platform",
     lifespan=lifespan
 )
+
+@app.middleware("http")
+async def ensure_db_ready_middleware(request, call_next):
+    if not _db_initialized:
+        init_db()
+    return await call_next(request)
 
 # CORS Middleware
 app.add_middleware(

@@ -19,7 +19,10 @@ class Settings:
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
     
     # Database
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./raahat.db")
+    DATABASE_URL: str = os.getenv(
+        "DATABASE_URL",
+        "sqlite:////tmp/raahat.db" if os.getenv("VERCEL") else "sqlite:///./raahat.db"
+    )
     
     # Need Score Weights (Sum = 1.0)
     WEIGHT_MEDICAL_SEVERITY: float = 0.30
